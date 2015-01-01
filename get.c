@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <string.h>
-#include <netdb.h>
+#include <sys/socket.h>//connect, sockaddr, etc.
+#include <unistd.h>//for close()
+#include <string.h>//memset, memcpy
+#include <netdb.h>//hostent,gethostbyname, etc.
 
 int main(void){
 
