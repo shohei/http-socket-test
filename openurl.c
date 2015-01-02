@@ -59,13 +59,13 @@ int openurl (char *output_filename, char* target_host, char* target_uri, int tar
     send(sofd, "\r\n",      strlen("\r\n"),      0);
     send(sofd, "\r\n",      strlen("\r\n"),      0);
 
-    int ret = remove(output_filename); 
-    if(ret==0){
+    bool onErrorRemove = remove(output_filename); 
+    if(onErrorRemove==FALSE){
        printf( "%s removed.\n", output_filename );
     }
     else{
       printf( "%s: no such file.\n",output_filename);
-      fprintf(stderr,"%d",ret);
+      fprintf(stderr,"%d",onErrorRemove);
     }
 
     FILE *fp;
@@ -92,7 +92,7 @@ int openurl (char *output_filename, char* target_host, char* target_uri, int tar
             };
             printf("sliced: %d\n",i);
             char *html;
-            html = &http_res[i+4];//removing return
+            html = &http_res[i+4];//remove line ending 
             /* printf(html); */
             fprintf(fp,"%s",html);
             isHeader = FALSE;
@@ -102,8 +102,6 @@ int openurl (char *output_filename, char* target_host, char* target_uri, int tar
             fprintf(fp,"%s",http_res);
             memset(&http_res, '\0', sizeof(http_res));
         }
-        /* fprintf(fp,"%s",http_res); */
-        /* memset(&http_res, '\0', sizeof(http_res)); */
     }
     fclose(fp);
 

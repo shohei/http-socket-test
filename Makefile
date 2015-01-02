@@ -15,5 +15,5 @@ $(PROGRAM): $(OBJS)
 	clean
 
 clean:
-	rm *.o
-	rm *.html
+	rm -f *.o
+	rm -f *.html
