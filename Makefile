@@ -1,17 +1,13 @@
-all: help
+PROGRAM = main
+OBJS = main.o openurl.o
+CFLAGS= -Wall -O2
+CC = gcc $(CFLAGS)
 
-help:
-	@echo "Usage:"
-	@echo "		make get"
-	@echo "		make echo"
-	@echo "		make echo2"
-	@echo "		make server"
+.SUFFIXES: .o .c
 
-get:
-	gcc -o get get.c
-echo:
-	gcc -o echo echo.c
-echo2:
-	gcc -o echo2 echo2.c
-server:
-	gcc -o server server.c
+$(PROGRAM): $(OBJS)
+	$(CC) -o $(PROGRAM) $^
+
+.c.o: 
+	$(CC) -c $<
+
