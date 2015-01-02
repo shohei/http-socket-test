@@ -59,7 +59,17 @@ int openurl (char *output_filename, char* target_host, char* target_uri, int tar
     send(sofd, "\r\n",      strlen("\r\n"),      0);
     send(sofd, "\r\n",      strlen("\r\n"),      0);
 
-    FILE *fp = fopen(output_filename,"w");
+    int ret = remove(output_filename); 
+    if(ret==0){
+       printf( "%s removed.\n", output_filename );
+    }
+    else{
+      printf( "%s: no such file.\n",output_filename);
+      fprintf(stderr,"%d",ret);
+    }
+
+    FILE *fp;
+    fp = fopen(output_filename,"w");
     if(fp==NULL){
         fprintf(stderr,"cannot open output file\n");
         return 1;
@@ -70,27 +80,30 @@ int openurl (char *output_filename, char* target_host, char* target_uri, int tar
         if(isHeader){
             char c1, c2, c3, c4;
             int i;
-            for(i=0;i<strlen(http_res);i=i+3){
+            for(i=0;i<strlen(http_res);i++){
                 c1 = http_res[i];
                 c2 = http_res[i+1];
                 c3 = http_res[i+2];
                 c4 = http_res[i+3];
                 if(c1=='\r' && c2=='\n' && c3=='\r' && c4=='\n'){
+                    printf("break at %d\n",i);
                     break;
                 }
             };
             printf("sliced: %d\n",i);
             char *html;
             html = &http_res[i+4];//removing return
-            printf(html);
+            /* printf(html); */
             fprintf(fp,"%s",html);
             isHeader = FALSE;
         }
         else {
-            printf("%s",http_res);
+            /* printf("%s",http_res); */
             fprintf(fp,"%s",http_res);
             memset(&http_res, '\0', sizeof(http_res));
         }
+        /* fprintf(fp,"%s",http_res); */
+        /* memset(&http_res, '\0', sizeof(http_res)); */
     }
     fclose(fp);
 
