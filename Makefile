@@ -11,3 +11,9 @@ $(PROGRAM): $(OBJS)
 .c.o: 
 	$(CC) -c $<
 
+.PHONY:
+	clean
+
+clean:
+	rm *.o
+	rm *.html
