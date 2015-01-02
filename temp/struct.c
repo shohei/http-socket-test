@@ -32,7 +32,7 @@ int main(int argc, char **argv){
     addMeibo(&m,people);
 
     //show
-    for(int i=0;i<sizeof(m.people)/sizeof(Person);i++){
+    for(int i=0;i<sizeof(people)/sizeof(Person);i++){
         printf("Person %d\n",i);
         printf("    name: %s\n",m.people[i].name);
         printf("    age: %d\n",m.people[i].age);
